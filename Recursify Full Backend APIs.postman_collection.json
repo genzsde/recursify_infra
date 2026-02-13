@@ -1,0 +1,339 @@
+{
+  "info": {
+    "_postman_id": "63e94293-fb7e-478b-a05e-3a8fafe65766",
+    "name": "Recursify Full Backend APIs",
+    "description": "Auth + Questions + Heatmap + Smart Queue + Pagination\n\n[https://chatgpt.com/share/698d7a53-adb8-8007-879f-0d917f254658](https://chatgpt.com/share/698d7a53-adb8-8007-879f-0d917f254658)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29223882"
+  },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Auth - Login (Get JWT)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@gmail.com\",\n  \"password\": \"123456\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Test (Protected)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/users/test",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "users",
+            "test"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add Question",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Two Sum\",\n  \"description\": \"Find pair with target\",\n  \"questionNumber\": 1,\n  \"difficulty\": \"EASY\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/questions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Questions (Dashboard)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Today Revision Queue",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/today",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "today"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Mark Solved",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/1/solve",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "1",
+            "solve"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update Difficulty",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/1/difficulty?level=HARD",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "1",
+            "difficulty"
+          ],
+          "query": [
+            {
+              "key": "level",
+              "value": "HARD"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Question",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Heatmap Calendar",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/heatmap",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "heatmap"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Smart Revision Queue",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHJlY3Vyc2lmeS5jb20iLCJpYXQiOjE3NzA4NzQyODQsImV4cCI6MTc3MDk2MDY4NH0.1B7chO8QW4mtFx3d6qDcnOafLTkxUqHRmsprGz_omMk",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/smart",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "smart"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Paginated Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/questions/paged?page=0&size=5",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "questions",
+            "paged"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "5"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}
