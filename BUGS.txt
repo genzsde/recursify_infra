@@ -1,1 +1,2 @@
-questions with same question numbers are being added in the dashboard that creates chaos while deleting
+questions with same question numbers are being added in the dashboard that creates chaos while deleting.
+questions numbers can have negative values 
