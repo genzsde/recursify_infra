@@ -1,2 +1,3 @@
 questions with same question numbers are being added in the dashboard that creates chaos while deleting.
 questions numbers can have negative values 
+after solving the question from the todays question dashboard the question is still there, perheps the idea is that either remove it from the queue or showcase a small div in that card that says solved
