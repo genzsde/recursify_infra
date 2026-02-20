@@ -1,0 +1,139 @@
+//Idea for the heatap requires backend modification
+
+Yes 👍 — you can fake the heat-map without creating a new table,
+but there is a catch:
+
+You will NOT get “true solve history”
+You will get a practice activity calendar (last attempt dates)
+
+And honestly… for a personal DSA tracker this is totally acceptable and still looks like the well-known heatmap from LeetCode.
+
+🧠 Idea (No new table)
+
+You already have per-question data:
+
+Each Question has:
+
+solveCount
+
+nextRevisionDate
+
+(implicitly) last modified / last attempted date
+
+So instead of storing each solve event, we compute:
+
+For every day → how many questions were interacted with that day
+
+So calendar becomes “days you studied” not “days you solved”
+
+And visually → user cannot tell the difference 😄
+
+Step 1 — Add ONE field to Question (important)
+
+You need ONE timestamp per question.
+
+Add this:
+
+private LocalDate lastAttemptedDate;
+
+Update it whenever:
+
+solveCount increases
+
+user opens question
+
+user saves notes
+
+revision happens
+
+Example:
+
+question.setLastAttemptedDate(LocalDate.now());
+
+That’s it.
+No new table needed ✔
+
+Step 2 — Backend API (aggregate by date)
+@GetMapping("/heatmap/{userId}")
+public Map<LocalDate, Long> heatmap(@PathVariable Long userId){
+
+    List<Question> questions = questionRepo.findByUserId(userId);
+
+    Map<LocalDate, Long> map = new HashMap<>();
+
+    for(Question q : questions){
+        if(q.getLastAttemptedDate()==null) continue;
+
+        map.put(
+            q.getLastAttemptedDate(),
+            map.getOrDefault(q.getLastAttemptedDate(),0L)+1
+        );
+    }
+
+    return map;
+}
+
+Response:
+
+{
+ "2026-02-10": 4,
+ "2026-02-11": 2,
+ "2026-02-18": 7
+}
+
+Boom — now frontend stays EXACT SAME as I gave earlier.
+
+🎯 What This Represents
+
+Instead of:
+
+Real LeetCode	Your App
+submissions	practice sessions
+problems solved	problems revised
+competitive stats	learning consistency
+
+Which is actually BETTER for revision apps.
+
+Important Limitation
+
+If user solves same question 5 times in one day →
+This method counts 1 only
+
+But honestly this matches learning psychology better:
+
+The goal is daily engagement, not spam submissions
+
+⭐ Recommendation (for your project)
+
+Right now you are building a portfolio-level system.
+
+Do THIS version first.
+
+Later (v2) add solve_history table → you can even write in resume:
+
+“Initially implemented derived activity heatmap using question metadata, later migrated to event-based tracking architecture for accuracy and analytics.”
+
+Recruiters LOVE hearing that sentence.
+
+So your architecture becomes
+
+Phase 1 (now)
+
+lastAttemptedDate per question
+
+aggregate counts
+
+render calendar
+
+Phase 2 (future)
+
+event tracking
+
+streak intelligence
+
+performance analytics
+
+If you want, next I’ll help you add:
+👉 
+hovering tooltip like “Solved 5 questions on Feb 12”
+That makes the heatmap look insanely professional.
